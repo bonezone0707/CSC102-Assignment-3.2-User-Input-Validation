@@ -1,60 +1,58 @@
-// Select the form and result message elements for palindrome checker
-const palindromeForm = document.getElementById('palindromeForm');
-const resultMessage = document.getElementById('resultMessage');
-
-// Handle form submission for palindrome checker
-palindromeForm.onsubmit = function (event) {
-  event.preventDefault(); // Prevent the default form submission behavior
-
-  // Get the user input
+// Function to check if input is a palindrome
+function checkPalindrome() {
   const userInput = document.getElementById('userInput').value.trim();
+  const resultMessage = document.getElementById('resultMessage');
 
-  // Check if the input is a palindrome
-  const isPalindrome = userInput === userInput.split('').reverse().join('');
-  
-  // Display the result
-  if (isPalindrome) {
-    resultMessage.innerHTML = `<span style="color: green;">"${userInput}" is a palindrome!</span>`;
-  } else {
-    resultMessage.innerHTML = `<span style="color: red;">"${userInput}" is not a palindrome.</span>`;
+  if (userInput === "") {
+    resultMessage.textContent = "Please enter a word or phrase.";
+    resultMessage.className = "error-message";
+    return;
   }
 
-  // Clear the input field
-  document.getElementById('userInput').value = '';
-};
+  const isPalindrome = userInput === userInput.split('').reverse().join('');
 
-// Select the form and result message elements for user input validation
-const userForm = document.getElementById('userForm');
+  if (isPalindrome) {
+    resultMessage.textContent = `"${userInput}" is a palindrome!`;
+    resultMessage.className = "success-message";
+  } else {
+    resultMessage.textContent = `"${userInput}" is not a palindrome.`;
+    resultMessage.className = "error-message";
+  }
 
-// Handle form submission for user input validation
-userForm.onsubmit = function (event) {
-  event.preventDefault(); // Prevent the default form submission behavior
+  document.getElementById('userInput').value = "";
+}
 
-  // Get the user inputs
+// Function to validate user input
+function validateUserInput() {
   const firstName = document.getElementById('firstName').value.trim();
   const lastName = document.getElementById('lastName').value.trim();
   const zipCode = document.getElementById('zipCode').value.trim();
+  const resultMessage = document.getElementById('resultMessage');
 
-  // Combine first and last names
+  if (firstName === "" || lastName === "" || zipCode === "") {
+    resultMessage.textContent = "All fields are required.";
+    resultMessage.className = "error-message";
+    return;
+  }
+
   const fullName = `${firstName} ${lastName}`;
 
-  // Validate the full name length
   if (fullName.length > 20) {
-    resultMessage.innerHTML = `<span style="color: red;">The combined name must not exceed 20 characters.</span>`;
+    resultMessage.textContent = "The combined name must not exceed 20 characters.";
+    resultMessage.className = "error-message";
     return;
   }
 
-  // Validate the zip code (must be 5 digits)
   if (!/^\d{5}$/.test(zipCode)) {
-    resultMessage.innerHTML = `<span style="color: red;">The zip code must be exactly 5 digits.</span>`;
+    resultMessage.textContent = "The zip code must be exactly 5 digits.";
+    resultMessage.className = "error-message";
     return;
   }
 
-  // If the inputs are valid, show the secret message
-  resultMessage.innerHTML = `<span style="color: green;">Success! The secret message is: "Never stop learning and growing."</span>`;
+  resultMessage.textContent = 'Success! The secret message is: "Never stop learning and growing."';
+  resultMessage.className = "success-message";
 
-  // Clear the input fields
-  document.getElementById('firstName').value = '';
-  document.getElementById('lastName').value = '';
-  document.getElementById('zipCode').value = '';
-};
+  document.getElementById('firstName').value = "";
+  document.getElementById('lastName').value = "";
+  document.getElementById('zipCode').value = "";
+}
